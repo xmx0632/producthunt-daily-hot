@@ -197,6 +197,25 @@ def generate_markdown(products, date_str):
         file.write(markdown_content)
     print(f"文件 {file_name} 生成成功并已覆盖。")
 
+def generate_markdown_mock(date_str):
+    """生成Markdown内容并保存到data目录"""
+    # 获取今天的日期并格式化
+    today = datetime.now(timezone.utc)
+    date_today = today.strftime('%Y-%m-%d')
+
+    markdown_content = f"# PH今日热榜 | {date_today}\n\n"
+    
+    # 确保 data 目录存在
+    os.makedirs('data', exist_ok=True)
+
+    # 修改文件保存路径到 data 目录
+    file_name = f"data/producthunt-daily-{date_today}.md"
+    
+    # 如果文件存在，直接覆盖
+    with open(file_name, 'w', encoding='utf-8') as file:
+        file.write(markdown_content)
+    print(f"文件 {file_name} 生成成功并已覆盖。")
+
 
 def main():
     # 获取昨天的日期并格式化
@@ -204,10 +223,11 @@ def main():
     date_str = yesterday.strftime('%Y-%m-%d')
 
     # 获取Product Hunt数据
-    products = fetch_product_hunt_data()
+    # products = fetch_product_hunt_data()
 
     # 生成Markdown文件
-    generate_markdown(products, date_str)
+    # generate_markdown(products, date_str)
+    generate_markdown_mock(date_str)
 
 if __name__ == "__main__":
     main()
